@@ -1,5 +1,6 @@
 import { ModeToggle } from '@/components/toggle-button';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import {
   Card,
   CardContent,
@@ -32,7 +33,9 @@ export default function Home() {
             通过精确的手动分块策略，优化您的大型文本处理流程，提高向量检索效率和准确性。
           </p>
           <div className='flex flex-wrap gap-4 justify-center'>
-            <Button size='lg'>开始使用</Button>
+            <Link href='/block'>
+              <Button size='lg'>开始使用</Button>
+            </Link>
             <Button size='lg' variant='outline'>
               查看文档
             </Button>

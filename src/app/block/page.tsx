@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid'; // 你需要安装这个包: npm install uuid @types/uuid
+import { v4 as uuidv4 } from 'uuid';
 import { ModeToggle } from '@/components/toggle-button';
 import { ArticleView } from './components/ArticleView';
 import { BlocksResult } from './components/BlocksResult';
