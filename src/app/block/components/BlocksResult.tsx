@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { Block, HIGHLIGHT_COLORS } from '../types';
+import { X } from 'lucide-react'; // 导入 X 图标
 
 interface BlocksResultProps {
   blocks: Block[];
@@ -12,6 +13,7 @@ interface BlocksResultProps {
   hasHighlights: boolean;
   onEditBlock: (blockId: string) => void;
   editingHighlightId: string | null;
+  onDeleteBlock?: (blockId: string) => void; // 添加删除块的回调函数
 }
 
 export function BlocksResult({
@@ -21,6 +23,7 @@ export function BlocksResult({
   hasHighlights,
   onEditBlock,
   editingHighlightId,
+  onDeleteBlock,
 }: BlocksResultProps) {
   return (
     <Card className='h-[calc(100vh-10rem)] overflow-hidden flex flex-col'>
@@ -87,9 +90,25 @@ export function BlocksResult({
                         }`
                       : `块 ${index + 1} - 未标记`}
                   </Badge>
-                  <span className='text-xs text-muted-foreground'>
-                    {block.text.length} 字符
-                  </span>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-xs text-muted-foreground'>
+                      {block.text.length} 字符
+                    </span>
+                    {/* 添加删除按钮，但仅对高亮的块显示 */}
+                    {block.color !== null && onDeleteBlock && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation(); // 阻止事件冒泡，避免触发编辑
+                          onDeleteBlock(block.id);
+                        }}
+                        className='text-muted-foreground hover:text-destructive rounded-full p-1 transition-colors'
+                        aria-label='删除分块'
+                        title='删除分块'
+                      >
+                        <X size={16} />
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <p
                   className={cn(

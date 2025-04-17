@@ -82,6 +82,27 @@ export default function BlockPage() {
     }
   };
 
+  // 添加删除高亮函数
+  const handleDeleteBlock = (blockId: string) => {
+    // 从高亮列表中移除对应ID的高亮
+    setHighlights((prev) => prev.filter((h) => h.id !== blockId));
+
+    // 如果已经生成了分块，重新生成
+    if (processed) {
+      const updatedHighlights = highlights.filter((h) => h.id !== blockId);
+      const newBlocks = generateBlocksFromHighlights(
+        articleText,
+        updatedHighlights
+      );
+      setBlocks(newBlocks);
+    }
+
+    // 如果正在编辑该分块，取消编辑状态
+    if (editingHighlightId === blockId) {
+      setEditingHighlightId(null);
+    }
+  };
+
   return (
     <div className='container mx-auto px-4 py-8 relative'>
       {/* 切换按钮放在右上角 */}
@@ -125,6 +146,7 @@ export default function BlockPage() {
           hasHighlights={highlights.length > 0}
           onEditBlock={handleEditBlock}
           editingHighlightId={editingHighlightId}
+          onDeleteBlock={handleDeleteBlock} // 添加删除功能
         />
       </div>
     </div>
