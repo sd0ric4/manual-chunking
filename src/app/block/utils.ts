@@ -12,14 +12,12 @@ export function generateBlocksFromHighlights(
   // 按开始位置排序高亮
   const sortedHighlights = [...highlights].sort((a, b) => a.start - b.start);
 
-  // 收集所有高亮区域作为块
-  const highLightedBlocks: Block[] = sortedHighlights.map(
-    (highlight, index) => ({
-      text: articleText.substring(highlight.start, highlight.end),
-      color: highlight.colorIndex,
-      id: `block-h-${index}`,
-    })
-  );
+  // 收集所有高亮区域作为块，保留原始高亮ID
+  const highLightedBlocks: Block[] = sortedHighlights.map((highlight) => ({
+    text: articleText.substring(highlight.start, highlight.end),
+    color: highlight.colorIndex,
+    id: highlight.id, // 使用高亮的ID作为块ID
+  }));
 
   // 找出未高亮的区域
   const unHighlightedBlocks: Block[] = [];
@@ -68,4 +66,12 @@ export function generateBlocksFromHighlights(
   });
 
   return allBlocks;
+}
+
+// 根据块ID查找对应的高亮
+export function findHighlightByBlockId(
+  highlights: Highlight[],
+  blockId: string
+): Highlight | undefined {
+  return highlights.find((h) => h.id === blockId);
 }

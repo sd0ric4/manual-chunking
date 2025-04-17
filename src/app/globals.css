@@ -74,6 +74,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --red-300-semi: rgba(252, 165, 165, 0.5);
+  --blue-300-semi: rgba(147, 197, 253, 0.5);
+  --green-300-semi: rgba(134, 239, 172, 0.5);
+  --yellow-300-semi: rgba(253, 224, 71, 0.5);
+  --purple-300-semi: rgba(216, 180, 254, 0.5);
 }
 
 .dark {
@@ -108,6 +113,11 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --red-300-semi: rgba(248, 113, 113, 0.3);
+  --blue-300-semi: rgba(96, 165, 250, 0.3);
+  --green-300-semi: rgba(74, 222, 128, 0.3);
+  --yellow-300-semi: rgba(250, 204, 21, 0.3);
+  --purple-300-semi: rgba(192, 132, 252, 0.3);
 }
 
 @layer base {
@@ -178,4 +188,73 @@
   /* 改为透明以显示背景发光效果 */
   min-height: 100vh;
   /* 确保至少占满整个视口高度 */
+}
+
+.highlight-overlap {
+  position: relative;
+}
+
+/* 浮标样式 */
+.marker-handle {
+  position: absolute;
+  width: 8px;
+  height: 24px;
+  background-color: hsl(var(--primary));
+  border: 2px solid hsl(var(--background));
+  border-radius: 4px;
+  cursor: ew-resize;
+  z-index: 50;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 分块调整提示 */
+.block-edit-hint {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(var(--primary-rgb), 0.1);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.block-edit-hint:hover {
+  opacity: 1;
+}
+
+/* 在文件末尾添加这些规则 */
+
+/* 确保所有可交互元素有正确的指针样式 */
+button:not(:disabled),
+[role="button"],
+a,
+.cursor-pointer,
+.clickable-block {
+  cursor: pointer !important;
+}
+
+/* 禁用元素使用禁止指针 */
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed !important;
+}
+
+/* 确保 Shadcn 按钮有指针样式 */
+.button,
+.btn,
+[class*="btn-"],
+[class*="button-"] {
+  cursor: pointer !important;
+}
+
+/* 确保高亮块在可编辑状态下有指针样式 */
+[data-highlight-editable="true"] {
+  cursor: pointer !important;
+}
+
+/* 拖动手柄使用双向箭头指针 */
+[data-role="resize-handle"],
+.resize-handle {
+  cursor: ew-resize !important;
 }

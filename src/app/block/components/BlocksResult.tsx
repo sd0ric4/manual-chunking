@@ -10,6 +10,8 @@ interface BlocksResultProps {
   processed: boolean;
   onGenerateBlocks: () => void;
   hasHighlights: boolean;
+  onEditBlock: (blockId: string) => void;
+  editingHighlightId: string | null;
 }
 
 export function BlocksResult({
@@ -17,6 +19,8 @@ export function BlocksResult({
   processed,
   onGenerateBlocks,
   hasHighlights,
+  onEditBlock,
+  editingHighlightId,
 }: BlocksResultProps) {
   return (
     <Card className='h-[calc(100vh-10rem)] overflow-hidden flex flex-col'>
@@ -26,7 +30,9 @@ export function BlocksResult({
           <Button
             size='sm'
             onClick={onGenerateBlocks}
-            disabled={!hasHighlights && processed}
+            disabled={
+              (!hasHighlights && processed) || editingHighlightId !== null
+            }
           >
             生成分块
           </Button>
@@ -55,11 +61,24 @@ export function BlocksResult({
                     ? cn(
                         HIGHLIGHT_COLORS[block.color].bgClass,
                         'border-2',
-                        HIGHLIGHT_COLORS[block.color].borderClass
+                        HIGHLIGHT_COLORS[block.color].borderClass,
+                        block.id === editingHighlightId &&
+                          'ring-2 ring-primary',
+                        // 添加条件指针样式
+                        block.color !== null &&
+                          editingHighlightId === null &&
+                          'cursor-pointer'
                       )
                     : 'bg-muted/30'
                 )}
+                onClick={() => block.color !== null && onEditBlock(block.id)}
+                style={{ position: 'relative' }}
               >
+                {block.color !== null && editingHighlightId === null && (
+                  <div className='absolute inset-0 bg-primary/10 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center'>
+                    <span className='text-xs font-medium'>点击调整范围</span>
+                  </div>
+                )}
                 <div className='flex justify-between items-center mb-2'>
                   <Badge variant={block.color !== null ? 'default' : 'outline'}>
                     {block.color !== null
