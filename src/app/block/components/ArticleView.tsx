@@ -62,7 +62,7 @@ export function ArticleView({
         const range = document.caretRangeFromPoint(e.clientX, e.clientY);
         if (range) {
           const textNode = range.startContainer;
-          let offset = range.startOffset;
+          const offset = range.startOffset;
 
           // 计算该文本节点之前的所有文本长度
           let totalOffset = 0;
@@ -84,7 +84,7 @@ export function ArticleView({
   };
 
   // 处理鼠标释放事件
-  const handleMouseUp = (e: React.MouseEvent) => {
+  const handleMouseUp = () => {
     if (isDraggingStart || isDraggingEnd) {
       setIsDraggingStart(false);
       setIsDraggingEnd(false);
@@ -130,7 +130,7 @@ export function ArticleView({
     if (!range) return 0;
 
     const textNode = range.startContainer;
-    let offset = range.startOffset;
+    const offset = range.startOffset;
 
     // 计算该文本节点之前的所有文本长度
     let totalOffset = 0;
@@ -377,15 +377,13 @@ export function ArticleView({
 
   // 辅助函数：获取元素中的所有文本节点
   const getTextNodesIn = (node: Node): Node[] => {
-    const textNodes: Node[] = [];
-    const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
-
+    const nodes: Node[] = [];
+    const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
     let currentNode;
-    while ((currentNode = walker.nextNode())) {
-      textNodes.push(currentNode);
+    while ((currentNode = walk.nextNode())) {
+      nodes.push(currentNode);
     }
-
-    return textNodes;
+    return nodes;
   };
 
   // 辅助函数：根据颜色索引列表生成样式类名
@@ -413,8 +411,7 @@ export function ArticleView({
 
       // 创建多层背景渐变
       const backgroundLayers = colors
-        .map((colorName, i) => {
-          const opacity = 0.3; // 每层的透明度
+        .map((colorName) => {
           return `linear-gradient(to bottom, var(--${colorName}-300-semi) 0%, var(--${colorName}-300-semi) 100%)`;
         })
         .join(', ');

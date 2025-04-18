@@ -119,7 +119,7 @@ export default function BlockPage() {
         </p>
         {editingHighlightId && (
           <p className='text-sm text-primary mt-1'>
-            正在调整分块范围，拖动浮标调整后点击"完成编辑"
+            正在调整分块范围，拖动浮标调整后点击&quot;完成编辑&quot;
           </p>
         )}
       </div>
@@ -149,6 +149,10 @@ export default function BlockPage() {
           onDeleteBlock={handleDeleteBlock} // 添加删除功能
         />
       </div>
+
+      <p className='text-lg mb-4'>
+        请使用荧光笔标记文本，然后点击&quot;生成分块&quot;
+      </p>
     </div>
   );
 }

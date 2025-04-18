@@ -46,7 +46,7 @@ export function BlocksResult({
           <div className='h-full flex items-center justify-center text-center'>
             <div>
               <p className='text-lg mb-4'>
-                请使用荧光笔标记文本，然后点击"生成分块"
+                请使用荧光笔标记文本，然后点击&quot;生成分块&quot;
               </p>
               <p className='text-muted-foreground'>
                 未标记的文本将自动成为独立的块
